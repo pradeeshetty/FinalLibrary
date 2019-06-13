@@ -3,6 +3,16 @@
 <html class="no-js" lang="en">
 
 <head>
+<%
+      if (session != null) {
+         if (session.getAttribute("admin") != null) {
+            String name = (String) session.getAttribute("admin");
+            
+         } else {
+            response.sendRedirect("login.jsp");
+         }
+      }
+   %>
 <style>
 table {
     background: #f5f5f5;
@@ -362,9 +372,8 @@ tbody:hover tr:hover td {
                             <img class="avatar user-thumb" src="assets2/images/author/avatar.png" alt="avatar">
                             <h4 class="user-name dropdown-toggle" data-toggle="dropdown">Admin <i class="fa fa-angle-down"></i></h4>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Message</a>
-                                <a class="dropdown-item" href="#">Settings</a>
-                                <a class="dropdown-item" href="#">Log Out</a>
+                               
+                                <a class="dropdown-item" href="Logout">Log Out</a>
                             </div>
                         </div>
                     </div>

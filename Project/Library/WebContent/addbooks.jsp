@@ -86,6 +86,7 @@
 	width: 55%;
 }
 .form-style-2 input[type=submit],
+.form-style-2 input[type=reset],
 .form-style-2 input[type=button]{
 	border: none;
 	padding: 8px 15px 8px 15px;
@@ -99,6 +100,7 @@
 	-moz-border-radius: 3px;
 }
 .form-style-2 input[type=submit]:hover,
+.form-style-2 input[type=reset]:hover,
 .form-style-2 input[type=button]:hover{
 	background: #EA7B00;
 	color: #fff;
@@ -136,6 +138,7 @@
                                 <ul class="collapse">
                                     <li><a href="addbooks.jsp">Add Books</a></li>
                                     <li><a href="bookupdate.jsp">Update Books</a></li>
+                                     <li><a href="deletebook.jsp">Delete Books</a></li>
                                 </ul>
                             </li>
                           
@@ -169,10 +172,7 @@
                             <span></span>
                         </div>
                         <div class="search-box pull-left">
-                            <form action="#">
-                                <input type="text" name="search" placeholder="Search..." required>
-                                <i class="ti-search"></i>
-                            </form>
+                            
                         </div>
                     </div>
                     <!-- profile info & task notification -->
@@ -342,9 +342,8 @@
                             <img class="avatar user-thumb" src="assets2/images/author/avatar.png" alt="avatar">
                             <h4 class="user-name dropdown-toggle" data-toggle="dropdown">Admin <i class="fa fa-angle-down"></i></h4>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Message</a>
-                                <a class="dropdown-item" href="#">Settings</a>
-                                <a class="dropdown-item" href="#">Log Out</a>
+                                <a class="dropdown-item" href="Logout">Logout</a>
+                           
                             </div>
                         </div>
                     </div>
@@ -372,7 +371,8 @@
 	</select></label>
 <!-- 	<label for="field5"><span>Message <span class="required">*</span></span><textarea name="field5" class="textarea-field"></textarea></label> -->
 
-	<label><span> </span><input type="submit" value="Add Book" /></label>
+	<label><span> </span><input type="submit" value="Add Book" />&nbsp;&nbsp;&nbsp;<input type="reset" value="Clear" /></label>
+		
 	
 </form>
 </div>

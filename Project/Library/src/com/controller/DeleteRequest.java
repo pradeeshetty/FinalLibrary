@@ -10,19 +10,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.DbConnection.DbConnection;
-import com.model.AddRequest;
 
 /**
- * Servlet implementation class IssueBook
+ * Servlet implementation class DeleteRequest
  */
-@WebServlet("/IssueBook")
-public class IssueBook extends HttpServlet {
+@WebServlet("/DeleteRequest")
+public class DeleteRequest extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public IssueBook() {
+    public DeleteRequest() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -41,42 +40,27 @@ public class IssueBook extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-	//	doGet(request, response);
 		response.setContentType("text/html");
 		PrintWriter out=response.getWriter();
-		AddRequest ar=new AddRequest();
-		String bookid=request.getParameter("bookid");
-		String userid=request.getParameter("userid");
-		String reqid=request.getParameter("requestid");
-		System.out.println("user id "+userid);
-		DbConnection d=new DbConnection();
-		ar.setBookid(bookid);
-		ar.setUserid(userid);
-		String msg="Book has been issued goto library and collect it";
+		 String bookid = request.getParameter("bookid");
+		 String userid = request.getParameter("userid");
+		 DbConnection d=new DbConnection();
+		 int i=d.deleterequest(bookid, userid);
+		 if(i!=0)
+		 {
+			  out.println("<script type=\"text/javascript\">");
+			  out.println("alert('Request Deleted successfully');");
+			  out.println("location='requestedbook.jsp';");
+			  out.println("</script>");
+		 }
+		 else
+		 {
+			  out.println("<script type=\"text/javascript\">");
+			  out.println("alert('Error');");
+			  out.println("location='requestedbook.jsp';");
+			  out.println("</script>");
+		 }
 		
-		int available=d.getavailable(bookid);
-		//System.out.println("i "+i);
-			if(available>0)
-			{
-				d.addmsg(ar,msg);
-				d.updatavailable(bookid);
-				d.addissuedbooks(ar);
-				d.rejectrequest(bookid, reqid);
-				out.println("<script type=\"text/javascript\">");
-				out.println("alert('Book issued for the user successfully');");
-				out.println("location='bookrequest.jsp';");
-				out.println("</script>");
-			}
-				//d.rejectrequest(userid);
-		
-			else
-			{
-				out.println("<script type=\"text/javascript\">");
-				out.println("alert('Failed to issue');");
-				out.println("location='bookrequest.jsp';");
-			  	out.println("</script>");
-			}
-		}
-	
+	}
 
 }

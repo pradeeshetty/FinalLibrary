@@ -122,8 +122,18 @@ tbody:hover tr:hover td {
     <!-- modernizr css -->
     <script src="assets2/js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
-
+<%
+      if (session != null) {
+         if (session.getAttribute("admin") != null) {
+            String name = (String) session.getAttribute("admin");
+            
+         } else {
+            response.sendRedirect("login.jsp");
+         }
+      }
+   %>
 <body>
+
     <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
@@ -189,10 +199,7 @@ tbody:hover tr:hover td {
                             <span></span>
                         </div>
                         <div class="search-box pull-left">
-                            <form action="#">
-                                <input type="text" name="search" placeholder="Search..." required>
-                                <i class="ti-search"></i>
-                            </form>
+                          
                         </div>
                     </div>
                     <!-- profile info & task notification -->
@@ -362,9 +369,8 @@ tbody:hover tr:hover td {
                             <img class="avatar user-thumb" src="assets2/images/author/avatar.png" alt="avatar">
                             <h4 class="user-name dropdown-toggle" data-toggle="dropdown">Admin <i class="fa fa-angle-down"></i></h4>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Message</a>
-                                <a class="dropdown-item" href="#">Settings</a>
-                                <a class="dropdown-item" href="#">Log Out</a>
+                              
+                                <a class="dropdown-item" href="Logout">Log Out</a>
                             </div>
                         </div>
                     </div>

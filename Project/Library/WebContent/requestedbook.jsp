@@ -1,9 +1,3 @@
-<!--A Design by W3layouts
-Author: W3layout
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
--->
 
 <%@page import="com.DbConnection.*,java.util.*"%>
 <!DOCTYPE HTML>
@@ -155,21 +149,17 @@ tbody:hover tr:hover td {
 	<div class='h_btm'>
 		<div class='cssmenu'>
 			<ul>
-			    <li><a href='userhome.jsp'><span>Home</span></a></li>
+			    <li ><a href='userhome.jsp'><span>Home</span></a></li>
 			    <li><a href='about.jsp'><span>About</span></a></li>
-			    <li class='active'><a href='userbooks.jsp'><span>Books</span></a></li>
-			       <li><a href='requestedbook.jsp'><span>Requested Books</span></a></li>
-			    <li><a href='usermsg.jsp'><span>Messages</span></a></li>
-			 
+			    <li class='has-sub'><a href='userbooks.jsp'><span>Books</span></a></li>
+			    <li class='active'><a href='usermsg.jsp'><span>Messages</span></a></li>
+			    <li><a href='requestedbook.jsp'><span>Requested Books</span></a></li>
 			    <li class='last'><a href='Logout'><span>Logout</span></a></li>
-			 	<div class="clear"></div>
+			 	
 			 </ul>
 	</div>
-		<div class="clear"></div>
-	</div>
 	
-	
-	
+	<div class="clear"></div>
 </div>
 </div>
 </div>
@@ -179,15 +169,15 @@ tbody:hover tr:hover td {
 <div class="wrap">
 	 <form action="BookRequest" method="post">
             	<table>
-            	<tr><th>Book Name:</th> <th>Author:</th> <th>Publisher:</th>  <th>Price:</th> <th>Pages:</th> <th>Year:</th>  <th> Available:</th></tr>
+            	<tr><th>Book Name:</th>  <th> Available:</th><th>Author:</th>  <th> Publisher:</th></tr>
             	
             	<%
                 HttpSession ss=request.getSession(false);  
-                String id=(String)ss.getAttribute("id");  
+               // String id=(String)ss.getAttribute("id");  
                 DbConnection d=new DbConnection();
                 String name = (String) session.getAttribute("user");
                 String userid=d.getid(name);
-            	List l=d.viewbook();
+            	List l=d.requestedbook(userid);
             	 Iterator iterator = l.iterator();
                  while(iterator.hasNext()) {  
                 	 
@@ -198,21 +188,16 @@ tbody:hover tr:hover td {
                 	 
                 %>
 
-                 <td><br><a href="BookRequest?bookid=<%=iterator.next() %>&userid=<%=userid %>">Request for book</a><br></td> 
-
                  <tr>
               <td>   <%=iterator.next() %></td>
-                  <td> <%=iterator.next() %> </td>
-               <td> <%=iterator.next() %></td>
-                <td>  <%=iterator.next() %></td>
-                <td> <%=iterator.next() %></td>
-                <td>    <%=iterator.next() %></td>
-                 <% iterator.next(); %>
-                <td>  <%=iterator.next() %></td>
+                <td>   <%=iterator.next() %></td>
+                   <td>   <%=iterator.next() %></td>
+                <td>   <%=iterator.next() %></td>
+                <td>  <a href="DeleteRequest?bookid=<%=iterator.next() %>&userid=<%=userid%>">Delete</a></td>
+<!--                   <td>  Book has been issued goto library and collect it </td> -->
               
 <%--                 <input type="hidden" name="userid" value="<%=userid %>"> --%>
 <!--              <td><input type="submit" value="Request"></td> -->
-
                  </tr>
                 <br>
                   <% 
@@ -227,7 +212,7 @@ tbody:hover tr:hover td {
 	<div class="wrap">
 		<div class="footer">
 		<div class="copy">
-			<p class="w3-link">&copy; 2013 Public-Library. All Rights Reserved</a></p>
+			<p class="w3-link">&copy; 2013 Public-Library. All Rights Reserved | Design by&nbsp;</p>
 		</div>
 		<div class="clear"></div>	
 	</div>

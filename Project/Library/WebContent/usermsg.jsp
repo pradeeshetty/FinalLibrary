@@ -1,9 +1,3 @@
-<!--A Design by W3layouts
-Author: W3layout
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
--->
 
 <%@page import="com.DbConnection.*,java.util.*"%>
 <!DOCTYPE HTML>
@@ -128,7 +122,7 @@ tbody:hover tr:hover td {
       if (session != null) {
          if (session.getAttribute("user") != null) {
             String name = (String) session.getAttribute("user");
-            out.print("Hello, " + name + "  Welcome to ur Profile");
+            
          } else {
             response.sendRedirect("login.jsp");
          }
@@ -155,10 +149,11 @@ tbody:hover tr:hover td {
 	<div class='h_btm'>
 		<div class='cssmenu'>
 			<ul>
-			    <li class='active'><a href='userhome.jsp'><span>Home</span></a></li>
+			    <li ><a href='userhome.jsp'><span>Home</span></a></li>
 			    <li><a href='about.jsp'><span>About</span></a></li>
 			    <li class='has-sub'><a href='userbooks.jsp'><span>Books</span></a></li>
-			    <li><a href='usermsg.jsp'><span>Messages</span></a></li>
+			       <li><a href='requestedbook.jsp'><span>Requested Books</span></a></li>
+			    <li class='active'><a href='usermsg.jsp'><span>Messages</span></a></li>
 			 
 			    <li class='last'><a href='Logout'><span>Logout</span></a></li>
 			 	
@@ -175,7 +170,7 @@ tbody:hover tr:hover td {
 <div class="wrap">
 	 <form action="BookRequest" method="post">
             	<table>
-            	<tr><th>Book Name:</th>  <th> Status:</th></tr>
+            	<tr><th>Book Name:</th>  <th> Status:</th><th> Date:</th></tr>
             	
             	<%
                 HttpSession ss=request.getSession(false);  
@@ -196,7 +191,9 @@ tbody:hover tr:hover td {
 
                  <tr>
               <td>   <%=iterator.next() %></td>
-                  <td>  Book has been issued goto library and collect it </td>
+                <td>   <%=iterator.next() %></td>
+                 <td>   <%=iterator.next() %></td>
+<!--                   <td>  Book has been issued goto library and collect it </td> -->
               
 <%--                 <input type="hidden" name="userid" value="<%=userid %>"> --%>
 <!--              <td><input type="submit" value="Request"></td> -->
@@ -214,7 +211,7 @@ tbody:hover tr:hover td {
 	<div class="wrap">
 		<div class="footer">
 		<div class="copy">
-			<p class="w3-link">© 2013 Public-Library. All Rights Reserved | Design by&nbsp; <a href="http://w3layouts.com/"> W3Layouts</a></p>
+			<p class="w3-link">&copy; 2013 Public-Library. All Rights Reserved | Design by&nbsp;</p>
 		</div>
 		<div class="clear"></div>	
 	</div>

@@ -13,21 +13,21 @@ public class DbConnection {
 	public static Connection createConnection()
 	{
 	Connection con = null;
-	String url = "jdbc:mysql://localhost:3306/library"; //MySQL URL followed by the database name
-	String username = "root"; //MySQL username
-	String password = "root"; //MySQL password
+	String url = "jdbc:mysql://localhost:3306/library"; 
+	String username = "root"; 
+	String password = "root"; 
 	try 
 	{
 	try 
 	{
-	Class.forName("com.mysql.jdbc.Driver"); //loading MySQL drivers. This differs for database servers 
+	Class.forName("com.mysql.jdbc.Driver"); 
 	} 
 	catch (ClassNotFoundException e)
 	{
 	e.printStackTrace();
 	}
-	con = DriverManager.getConnection(url, username, password); //attempting to connect to MySQL database
-	System.out.println("Printing connection object "+con);
+	con = DriverManager.getConnection(url, username, password); 
+	//System.out.println("Printing connection object "+con);
 	} 
 	catch (Exception e) 
 	{
@@ -413,17 +413,18 @@ public class DbConnection {
 	
 	 }
 	
-	public int addmsg(AddRequest ar)
+	public int addmsg(AddRequest ar,String msg)
 	{
 		int i=0;
 		try
 		{
 	 con = DbConnection.createConnection();
-	 String query = "insert into usermsg(book,user) values (?,?)"; 
+	 System.out.println("msg is "+msg);
+	 String query = "insert into usermsg(book,user,msg,date) values (?,?,?,CURTIME())"; 
 	 preparedStatement = con.prepareStatement(query); 
 	 preparedStatement.setString(1, ar.getBookid() );
 	 preparedStatement.setString(2, ar.getUserid());
-
+	 preparedStatement.setString(3, msg);
 	 
 	 i= preparedStatement.executeUpdate();
 	 System.out.println("i "+i);
@@ -446,7 +447,7 @@ public class DbConnection {
 		{
 	 con = DbConnection.createConnection();
 	// String query = "select b.bookname from books b,user u,usermsg s where s.book=b.bookid and s.user=u.id";
-	 String query = "select distinct b.bookname from books b,user u,usermsg s where s.book=b.bookid and s.user=?";
+	 String query = "select distinct s.date,s.msg,b.bookname from books b,user u,usermsg s where s.book=b.bookid and s.user=?";
 	 //select id from user where email="mepradeep456@gmail.com"
 	 preparedStatement = con.prepareStatement(query); 
 	 preparedStatement.setString(1, userid );		
@@ -456,6 +457,8 @@ public class DbConnection {
 	 {
 
 		 l.add(rs.getString("bookname"));
+		 l.add(rs.getString("msg"));
+		 l.add(rs.getString("date"));
 				/*
 				 * l.add(rs.getString("available")); l.add(rs.getString("bookid"));
 				 * l.add(rs.getString("bookid"));
@@ -536,7 +539,7 @@ public class DbConnection {
 	public int increaseavailable(String bookid)
 	{
 		int available=0;
-		DbConnection d=new DbConnection();
+		//DbConnection d=new DbConnection();
 		System.out.println("book id "+bookid);
 		try
 		{
@@ -681,6 +684,113 @@ public class DbConnection {
 	 return available;
 	
 	 }
+	public int denyduplicaterequest(AddRequest ad)
+	{
+		DbConnection d=new DbConnection();
+		/*
+		 * String bookid="13"; String userid="1";
+		 */
+		int i=0;
+		System.out.println("book id "+ad.getBookid()+"user id "+ad.getUserid());
+		try
+		{
+	 con = DbConnection.createConnection();
+	 String query = "select bookid,userid from bookrequest where bookid=? and userid=?"; 
+	 preparedStatement = con.prepareStatement(query); 
+	 preparedStatement.setString(1,  ad.getBookid());
+	 preparedStatement.setString(2, ad.getUserid());
+
+	 
+	 preparedStatement.execute();
+	 System.out.println("i "+i);
+	 ResultSet rs=preparedStatement.getResultSet();
+		while(rs.next())
+		if(ad.getBookid().equals(rs.getString("bookid")) && ad.getUserid().equals(rs.getString("userid")) )
+		{
+			
+			System.out.println("records exist");
+			//increment availability and copies
+			i=2;
+			
+		
+			
+		}
+		else
+		{
+			
+			i=0;
+			System.out.println("records unique i is"+i);
+		}
+		}
+
+	 catch(SQLException e)
+	 {
+	 e.printStackTrace();
+	 }
+	 return i;
+	
+	 }
+	public List requestedbook(String userid)
+	{
+		String id = null;
+		List l=new ArrayList();
+		//System.out.println("email  "+email);
+		try
+		{
+	 con = DbConnection.createConnection();
+	// String query = "select u.name,b.bookname from books b,user u,bookrequest s where s.bookid=b.bookid and s.userid=u.id";
+	 String query = "select distinct b.bookid,b.author,b.publisher,b.bookname,b.available from books b,bookrequest s where s.bookid=b.bookid and s.userid=?";
+	 //select id from user where email="mepradeep456@gmail.com"
+	 preparedStatement = con.prepareStatement(query); 
+	 preparedStatement.setString(1,  userid);
+	
+			
+	 preparedStatement.execute();
+	 ResultSet rs=preparedStatement.getResultSet();
+	 while(rs.next())
+	 {
+		
+		 l.add(rs.getString("bookname"));
+		 l.add(rs.getString("available"));
+		 l.add(rs.getString("author"));
+		 l.add(rs.getString("publisher"));
+		 l.add(rs.getString("bookid"));
+		 //l.add(rs.getString("name"));
+		
+	}
+		}
+	 catch(SQLException e)
+	 {
+	 e.printStackTrace();
+	 }
+	 return l;
+	
+	 }
+	public int deleterequest(String bookid,String userid)
+	{
+		int i=0;
+		//DbConnection d=new DbConnection();
+		System.out.println("book id "+bookid);
+		try
+		{
+	 con = DbConnection.createConnection();
+	 String query = "delete from bookrequest where bookid=? and userid=?"; 
+	 preparedStatement = con.prepareStatement(query); 
+	 preparedStatement.setString(1, bookid);
+	 preparedStatement.setString(2, userid);
+	 i= preparedStatement.executeUpdate();
+	// System.out.println("i "+i);
+
+	}
+
+	 catch(SQLException e)
+	 {
+	 e.printStackTrace();
+	 }
+	 return i;
+	
+	 }
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		createConnection();
@@ -693,14 +803,12 @@ public class DbConnection {
 		 */
 		//List s=d.getmsg("1");
 		//System.out.println(s);
-		AddBook ad=new AddBook();
-		ad.setBookname("Java");
-		ad.setAuthor("James");
-		ad.setPages("245");
-		ad.setPrice("121");
-		ad.setPublisher("Centelon");
-		ad.setYear("2014");
-		d.DuplicateBooks(ad);
+		/*
+		 * AddBook ad=new AddBook(); ad.setBookname("Java"); ad.setAuthor("James");
+		 * ad.setPages("245"); ad.setPrice("121"); ad.setPublisher("Centelon");
+		 * ad.setYear("2014"); d.DuplicateBooks(ad);
+		 */
+		//d.denyduplicaterequest();
 		
 
 	}

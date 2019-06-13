@@ -33,8 +33,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	<div class='h_btm'>
 		<div class='cssmenu'>
 			<ul>
-			    <li class=''><a href='userhome.jsp'><span>Home</span></a></li>
-			    <li><a href='about.jsp'><span>About</span></a></li>
+			    <li><a href='userhome.jsp'><span>Home</span></a></li>
+			    <li class="active"><a href='about.jsp'><span>About</span></a></li>
 			    <li class='has-sub'><a href='userbooks.jsp'><span>Books</span></a></li>
 			    <li><a href='usermsg.jsp'><span>Messages</span></a></li>
 			 
@@ -58,7 +58,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			<div class="clear"> </div>
 		</div>
 						<div class="about-info">
-							<a href="#">Work in progress.</a>
+							<a href="#">Library System.</a>
 						
 		 	<!---End-about---->
 		 </div>

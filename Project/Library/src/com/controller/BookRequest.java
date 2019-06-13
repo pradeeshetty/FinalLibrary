@@ -51,19 +51,31 @@ public class BookRequest extends HttpServlet {
 		DbConnection d=new DbConnection();
 		ar.setBookid(bookid);
 		ar.setUserid(userid);
-		int r=d.addrequest(ar);
-		 if(r==1)
+		int available=d.getavailable(bookid);
+		//System.out.println("i "+i);
+		int deny=d.denyduplicaterequest(ar);
+		System.out.println("deny is : "+deny);
+	//	int r=d.addrequest(ar);
+		if(deny==2)
+		{
+			out.println("<script type=\"text/javascript\">");
+			  out.println("alert('You have already requested for the books');");
+			  out.println("location='userbooks.jsp';");
+			  out.println("</script>");
+		}
+		else if(available>0)
 		 {
-			 out.println("<script type=\"text/javascript\">");
+			d.addrequest(ar);
+			  out.println("<script type=\"text/javascript\">");
 			  out.println("alert('Request sent successfully');");
 			  out.println("location='userbooks.jsp';");
 			  out.println("</script>");
 		 }
 		 else
 		 {
-			 out.println("<script type=\"text/javascript\">");
-			  out.println("alert('Failed to send again');");
-			  out.println("location='addbooks.jsp';");
+			  out.println("<script type=\"text/javascript\">");
+			  out.println("alert('Book is not available right now');");
+			  out.println("location='userbooks.jsp';");
 			  out.println("</script>");
 		 }
 	}

@@ -27,10 +27,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <body>
 
 <%
+String email="";
       if (session != null) {
          if (session.getAttribute("user") != null) {
-            String name = (String) session.getAttribute("user");
-            out.print("Hello, " + name + "  Welcome to ur Profile");
+             email = (String) session.getAttribute("user");
+            //out.print("Hello, " + name + "  Welcome to ur Profile");
          } else {
             response.sendRedirect("login.jsp");
          }
@@ -60,10 +61,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			    <li class='active'><a href='userhome.jsp'><span>Home</span></a></li>
 			    <li><a href='about.jsp'><span>About</span></a></li>
 			    <li class='has-sub'><a href='userbooks.jsp'><span>Books</span></a></li>
+			     <li><a href='requestedbook.jsp'><span>Requested Books</span></a></li>
 			    <li><a href='usermsg.jsp'><span>Messages</span></a></li>
 			 
 			    <li class='last'><a href='Logout'><span>Logout</span></a></li>
-			 	<div class="clear"></div>
+			
 			 </ul>
 	</div>
 	
@@ -73,7 +75,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 </div>
 </div>
 
-
+<div style="text-align: center; color: crimson;"> <% out.print("Hello, " + email + "  Welcome to ur Profile"); %> </div>
 <%
 String name = (String) session.getAttribute("user");
 	

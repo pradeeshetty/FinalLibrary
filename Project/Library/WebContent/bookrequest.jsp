@@ -3,6 +3,16 @@
 <html class="no-js" lang="en">
 
 <head>
+<%
+      if (session != null) {
+         if (session.getAttribute("admin") != null) {
+            String name = (String) session.getAttribute("admin");
+            
+         } else {
+            response.sendRedirect("login.jsp");
+         }
+      }
+   %>
 <style>
 table {
     background: #f5f5f5;
@@ -189,10 +199,7 @@ tbody:hover tr:hover td {
                             <span></span>
                         </div>
                         <div class="search-box pull-left">
-                            <form action="#">
-                                <input type="text" name="search" placeholder="Search..." required>
-                                <i class="ti-search"></i>
-                            </form>
+                           
                         </div>
                     </div>
                     <!-- profile info & task notification -->
@@ -399,7 +406,7 @@ tbody:hover tr:hover td {
               <td> <%=iterator.next() %> </td>
               
                  <td> <a href="IssueBook?bookid=<%=iterator.next() %>&userid=<%=id%>&requestid=<%=iterator.next() %>">Issue</a></td>
-                  <td> <a href="RejectBook?bookid=<%=iterator.next() %>&requestid=<%=iterator.next() %>">Reject</a></td>
+                  <td> <a href="RejectBook?bookid=<%=iterator.next() %>&requestid=<%=iterator.next() %>&userid=<%=id%>">Reject</a></td>
 <!--                 <td><input type="submit" value="Edit"></td> -->
                  </tr>
                 <br>

@@ -90,6 +90,7 @@
             </div>
         </div>
         <!-- sidebar menu area end -->
+       
         <!-- main content area start -->
         <div class="main-content">
             <!-- header area start -->
@@ -282,7 +283,7 @@
             <div class="main-content-inner">
                 <!-- sales report area start -->
             
-                                      
+                                       <h1>Welcome Admin</h1>
                         </div>
                     </div>
                     <!-- exchange area end -->
