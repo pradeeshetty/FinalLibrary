@@ -152,8 +152,8 @@ tbody:hover tr:hover td {
 			    <li ><a href='userhome.jsp'><span>Home</span></a></li>
 			    <li><a href='about.jsp'><span>About</span></a></li>
 			    <li class='has-sub'><a href='userbooks.jsp'><span>Books</span></a></li>
-			    <li class='active'><a href='usermsg.jsp'><span>Messages</span></a></li>
-			    <li><a href='requestedbook.jsp'><span>Requested Books</span></a></li>
+			    <li ><a href='usermsg.jsp'><span>Messages</span></a></li>
+			    <li class='active'><a href='requestedbook.jsp'><span>Requested Books</span></a></li>
 			    <li class='last'><a href='Logout'><span>Logout</span></a></li>
 			 	
 			 </ul>
